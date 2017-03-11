@@ -1,14 +1,30 @@
 #!/usr/bin/env bash
+sudo vpp -c ./test_lb.conf
+# @@@ check RC
+sleep 5
+echo Running command: create host-interface name eth0:1
 vppctl create host-interface name eth0:1
+echo Running command: create host-interface name eth0:2
 vppctl create host-interface name eth0:2
-vppctl set int ip address host-lo:1 127.0.0.3/8
-vppctl set interface state host-lo:0 up
-vppctl set interface state host-lo:1 up
-vppctl lb conf ip4-src-address 127.0.0.3 buckets 32
-vppctl lb vip 127.0.0.2/32 encap gre4
-vppctl lb as 127.0.0.2/32 127.0.0.4
-vppctl create gre tunnel src 127.0.0.3 dst 127.0.0.4
+echo Running command: set int ip address host-eth0:2 10.0.0.102/24
+vppctl set int ip address host-eth0:2 10.0.0.102/24
+echo Running command: set interface state host-eth0:1 up
+vppctl set interface state host-eth0:1 up
+echo Running command: set interface state host-eth0:2 up
+vppctl set interface state host-eth0:2 up
+echo Running command: lb conf ip4-src-address 10.0.0.102 buckets 32
+vppctl lb conf ip4-src-address 10.0.0.102 buckets 32
+echo Running command: lb vip 10.0.0.101/24 encap gre4
+vppctl lb vip 10.0.0.101/24 encap gre4
+echo Running command: lb as 10.0.0.101/24 10.0.0.103
+vppctl lb as 10.0.0.101/24 10.0.0.103
+echo Running command: create gre tunnel src 10.0.0.102 dst 10.0.0.103
+vppctl create gre tunnel src 10.0.0.102 dst 10.0.0.103
+echo Running command: show interface
 vppctl show interface
+echo Running command: show lb
 vppctl show lb
+echo Running command: show lb vip verbose
 vppctl show lb vip verbose
+echo Running command: show ip fib
 vppctl show ip fib
