@@ -1,34 +1,58 @@
 #!/usr/bin/env bash
 
+###
+### Interesting constants
+###
+LB_VIP_IF_NAME=eth0:1
+LB_VIP_IF_IP=10.0.0.101
+LB_VIP_IF_PREFIX_LEN=24
+LB_SRC_IF_NAME=eth0:2
+LB_SRC_IF_IP=10.0.0.102
+LB_SRC_IF_PREFIX_LEN=24
+# One AS for now
+AS1_DST_IF_NAME=eth0:3
+AS1_DST_IF_IP=10.0.0.1023
+AS1_DST_IF_PREFIX_LEN=24
+
 
 ###
-### Loopback Interfaces
+### Uninteresting constants
 ###
-# 4 Loopback interfaces
-sudo ifconfig lo:0 127.0.0.2 netmask 255.0.0.0 up
-sudo ifconfig lo:1 127.0.0.3 netmask 255.0.0.0 up
-sudo ifconfig lo:2 127.0.0.4 netmask 255.0.0.0 up
+VPP_CONFIG_FILE="$(dirname $0)/test_lb.conf"
+VPP_TMP_CLI_CONFIG_FILE="/tmp/vpp_cli_config"
+VPP_CONFIGURE_SCRIPT="$(dirname $0)/vpp_configure"
+
+
+###
+### Functions
+###
+# Add item to VPP CLI config
+rm -f "$VPP_TMP_CLI_CONFIG_FILE"
+echo "#!/usr/bin/env bash" > "$VPP_CONFIGURE_SCRIPT"
+# touch "$VPP_TMP_CLI_CONFIG_FILE"
+function vpp_add_cli_config() {
+    echo "  $*" >> "$VPP_TMP_CLI_CONFIG_FILE"
+    # Shouldn't need both of these, but running VPP with the `-c` option seems to ignore `unix-cli` config...
+    echo "vppctl $*" >> "$VPP_CONFIGURE_SCRIPT"
+}
 
 
 ###
 ### VPP
 ###
 
-# Restart VPP
-sudo service vpp restart
+# Add VIP and SRC interfaces to VPP
+vpp_add_cli_config create host-interface name ${LB_VIP_IF_NAME}
+vpp_add_cli_config create host-interface name ${LB_SRC_IF_NAME}
 
-# Add loopback interfaces to VPP (using .2 and .3)
-vppctl create host-interface name lo:0
-vppctl create host-interface name lo:1
-
-# Set up the LB source IP on host-lo:0 and host-lo:1
+# Set up the LB source IP
 # @@@ This line causes bad tcp checksum errors (without going through LB)
-# vppctl set int ip address host-lo:0 127.0.0.2/8
-vppctl set int ip address host-lo:1 127.0.0.3/8
+# vpp_add_cli_config set int ip address host-${LB_VIP_IF_NAME} ${LB_}/8
+vpp_add_cli_config set int ip address host-lo:1 127.0.0.3/8
 
 # Bring these up
-vppctl set interface state host-lo:0 up
-vppctl set interface state host-lo:1 up
+vpp_add_cli_config set interface state host-lo:0 up
+vpp_add_cli_config set interface state host-lo:1 up
 
 
 ###
@@ -36,13 +60,13 @@ vppctl set interface state host-lo:1 up
 ###
 
 # Set up the LB to send from .3
-vppctl lb conf ip4-src-address 127.0.0.3 buckets 32
+vpp_add_cli_config lb conf ip4-src-address 127.0.0.3 buckets 32
 
 # Set the VIP to .2
-vppctl lb vip 127.0.0.2/32 encap gre4
+vpp_add_cli_config lb vip 127.0.0.2/32 encap gre4
 
 # Add an AS - at .4
-vppctl lb as 127.0.0.2/32 127.0.0.4
+vpp_add_cli_config lb as 127.0.0.2/32 127.0.0.4
 
 
 ###
@@ -50,7 +74,7 @@ vppctl lb as 127.0.0.2/32 127.0.0.4
 ###
 
 # Create GRE tunnel in VPP (seems to make no difference at present)
-vppctl create gre tunnel src 127.0.0.3 dst 127.0.0.4
+vpp_add_cli_config create gre tunnel src 127.0.0.3 dst 127.0.0.4
 
 # Two options here it seems - neither work...
 USE_GRETAP=1
@@ -74,17 +98,32 @@ fi
 
 
 ###
+### Display config
+###
+vpp_add_cli_config show interface
+vpp_add_cli_config show lb
+vpp_add_cli_config show lb vip verbose
+vpp_add_cli_config show ip fib
+
+
+###
 ### Output the config
 ###
+echo "unix-cli {" > "$VPP_CONFIG_FILE"
+cat "$VPP_TMP_CLI_CONFIG_FILE" >> "$VPP_CONFIG_FILE"
+cat << CONFIG >> "$VPP_CONFIG_FILE"
+}
+unix {
+  nodaemon
+  log /tmp/vpp.log
+  cli-listen localhost:5002
+}
+api-trace {
+  on
+}
+CONFIG
 
-echo "================================================================"
-echo "VPP Interfaces:"
-vppctl show interface
-echo "================================================================"
-echo "VPP LB Config:"
-vppctl show lb
-echo "...LB VIP Config:"
-vppctl show lb vip verbose
-echo "================================================================"
-echo "FIB Table:"
-vppctl show ip fib
+###
+### Make configuration script executable
+###
+chmod +x "$VPP_CONFIGURE_SCRIPT"

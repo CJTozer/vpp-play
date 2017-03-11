@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+vppctl create host-interface name eth0:1
+vppctl create host-interface name eth0:2
+vppctl set int ip address host-lo:1 127.0.0.3/8
+vppctl set interface state host-lo:0 up
+vppctl set interface state host-lo:1 up
+vppctl lb conf ip4-src-address 127.0.0.3 buckets 32
+vppctl lb vip 127.0.0.2/32 encap gre4
+vppctl lb as 127.0.0.2/32 127.0.0.4
+vppctl create gre tunnel src 127.0.0.3 dst 127.0.0.4
+vppctl show interface
+vppctl show lb
+vppctl show lb vip verbose
+vppctl show ip fib
