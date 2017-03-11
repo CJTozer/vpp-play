@@ -1,246 +1,346 @@
 ------------------- Start of thread 0 vpp_main -------------------
 Packet 1
 
-00:04:56:039483: af-packet-input
+00:00:13:383379: af-packet-input
   af_packet: hw_if_index 1 next-index 4
     tpacket2_hdr:
       status 0x9 len 74 snaplen 74 mac 66 net 80
-      sec 0x58c421ad nsec 0xcdeaefe vlan 0 vlan_tpid 0
-00:04:56:039492: ethernet-input
+      sec 0x58c42883 nsec 0x3166895c vlan 0 vlan_tpid 0
+00:00:13:383392: ethernet-input
   IP4: 00:00:00:00:00:00 -> 00:00:00:00:00:00
-00:04:56:039496: ip4-input
+00:00:13:383398: ip4-input
   TCP: 127.0.0.1 -> 127.0.0.2
-    tos 0x00, ttl 64, length 60, checksum 0xd829
-    fragment id 0x648f, flags DONT_FRAGMENT
-00:04:56:039499: ip4-lookup
+    tos 0x00, ttl 64, length 60, checksum 0x8b31
+    fragment id 0xb187, flags DONT_FRAGMENT
+00:00:13:383403: ip4-lookup
   fib 0 dpo-idx 0 flow hash: 0x00000000
   TCP: 127.0.0.1 -> 127.0.0.2
-    tos 0x00, ttl 64, length 60, checksum 0xd829
-    fragment id 0x648f, flags DONT_FRAGMENT
-00:04:56:039502: lb4-gre4
+    tos 0x00, ttl 64, length 60, checksum 0x8b31
+    fragment id 0xb187, flags DONT_FRAGMENT
+00:00:13:383408: lb4-gre4
   lb vip[0]: ip4-gre4 127.0.0.2/32 new_size:1024 #as:1
 lb as[1]: 127.0.0.4 used
 
-00:04:56:039507: ip4-load-balance
-  fib 0 dpo-idx 9 flow hash: 0x00000000
+00:00:13:383456: ip4-load-balance
+  fib 0 dpo-idx 11 flow hash: 0x00000000
   GRE: 127.0.0.3 -> 127.0.0.4
     tos 0x00, ttl 128, length 84, checksum 0x3c74
     fragment id 0x0000
   GRE ip4
-00:04:56:039509: ip4-drop
+00:00:13:383458: ip4-arp
     GRE: 127.0.0.3 -> 127.0.0.4
       tos 0x00, ttl 128, length 84, checksum 0x3c74
       fragment id 0x0000
     GRE ip4
-00:04:56:039512: error-drop
-  ip4-input: ip4 adjacency drop
+00:00:13:383470: host-lo:1-output
+  host-lo:1
+  ARP: 02:fe:c0:24:ca:52 -> ff:ff:ff:ff:ff:ff
+  request, type ethernet/IP4, address size 6/4
+  02:fe:c0:24:ca:52/127.0.0.3 -> 00:00:00:00:00:00/127.0.0.4
+00:00:13:383471: error-drop
+  ip4-arp: ARP requests sent
 
 Packet 2
 
-00:04:56:039483: af-packet-input
+00:00:13:383379: af-packet-input
   af_packet: hw_if_index 1 next-index 4
     tpacket2_hdr:
       status 0x9 len 74 snaplen 74 mac 66 net 80
-      sec 0x58c421ad nsec 0xcdebcb1 vlan 0 vlan_tpid 0
-00:04:56:039492: ethernet-input
+      sec 0x58c42883 nsec 0x31669874 vlan 0 vlan_tpid 0
+00:00:13:383392: ethernet-input
   IP4: 00:00:00:00:00:00 -> 00:00:00:00:00:00
-00:04:56:039496: ip4-input
+00:00:13:383398: ip4-input
   TCP: 127.0.0.1 -> 127.0.0.2
-    tos 0x00, ttl 64, length 60, checksum 0xd829
-    fragment id 0x648f, flags DONT_FRAGMENT
-00:04:56:039499: ip4-lookup
+    tos 0x00, ttl 64, length 60, checksum 0x8b31
+    fragment id 0xb187, flags DONT_FRAGMENT
+00:00:13:383403: ip4-lookup
   fib 0 dpo-idx 0 flow hash: 0x00000000
   TCP: 127.0.0.1 -> 127.0.0.2
-    tos 0x00, ttl 64, length 60, checksum 0xd829
-    fragment id 0x648f, flags DONT_FRAGMENT
-00:04:56:039502: lb4-gre4
+    tos 0x00, ttl 64, length 60, checksum 0x8b31
+    fragment id 0xb187, flags DONT_FRAGMENT
+00:00:13:383408: lb4-gre4
   lb vip[0]: ip4-gre4 127.0.0.2/32 new_size:1024 #as:1
 lb as[1]: 127.0.0.4 used
 
-00:04:56:039507: ip4-load-balance
-  fib 0 dpo-idx 9 flow hash: 0x00000000
+00:00:13:383456: ip4-load-balance
+  fib 0 dpo-idx 11 flow hash: 0x00000000
   GRE: 127.0.0.3 -> 127.0.0.4
     tos 0x00, ttl 128, length 84, checksum 0x3c74
     fragment id 0x0000
   GRE ip4
-00:04:56:039509: ip4-drop
+00:00:13:383458: ip4-arp
     GRE: 127.0.0.3 -> 127.0.0.4
       tos 0x00, ttl 128, length 84, checksum 0x3c74
       fragment id 0x0000
     GRE ip4
-00:04:56:039512: error-drop
-  ip4-input: ip4 adjacency drop
+00:00:13:383471: error-drop
+  ip4-arp: address overflow drops
 
 Packet 3
 
-00:04:56:039483: af-packet-input
+00:00:13:383379: af-packet-input
   af_packet: hw_if_index 2 next-index 4
     tpacket2_hdr:
       status 0x9 len 74 snaplen 74 mac 66 net 80
-      sec 0x58c421ad nsec 0xcdeaa02 vlan 0 vlan_tpid 0
-00:04:56:039492: ethernet-input
+      sec 0x58c42883 nsec 0x3166842b vlan 0 vlan_tpid 0
+00:00:13:383392: ethernet-input
   IP4: 00:00:00:00:00:00 -> 00:00:00:00:00:00
-00:04:56:039496: ip4-input
+00:00:13:383398: ip4-input
   TCP: 127.0.0.1 -> 127.0.0.2
-    tos 0x00, ttl 64, length 60, checksum 0xd829
-    fragment id 0x648f, flags DONT_FRAGMENT
-00:04:56:039499: ip4-lookup
+    tos 0x00, ttl 64, length 60, checksum 0x8b31
+    fragment id 0xb187, flags DONT_FRAGMENT
+00:00:13:383403: ip4-lookup
   fib 0 dpo-idx 0 flow hash: 0x00000000
   TCP: 127.0.0.1 -> 127.0.0.2
-    tos 0x00, ttl 64, length 60, checksum 0xd829
-    fragment id 0x648f, flags DONT_FRAGMENT
-00:04:56:039502: lb4-gre4
+    tos 0x00, ttl 64, length 60, checksum 0x8b31
+    fragment id 0xb187, flags DONT_FRAGMENT
+00:00:13:383408: lb4-gre4
   lb vip[0]: ip4-gre4 127.0.0.2/32 new_size:1024 #as:1
 lb as[1]: 127.0.0.4 used
 
-00:04:56:039507: ip4-load-balance
-  fib 0 dpo-idx 9 flow hash: 0x00000000
+00:00:13:383456: ip4-load-balance
+  fib 0 dpo-idx 11 flow hash: 0x00000000
   GRE: 127.0.0.3 -> 127.0.0.4
     tos 0x00, ttl 128, length 84, checksum 0x3c74
     fragment id 0x0000
   GRE ip4
-00:04:56:039509: ip4-drop
+00:00:13:383458: ip4-arp
     GRE: 127.0.0.3 -> 127.0.0.4
       tos 0x00, ttl 128, length 84, checksum 0x3c74
       fragment id 0x0000
     GRE ip4
-00:04:56:039512: error-drop
-  ip4-input: ip4 adjacency drop
+00:00:13:383471: error-drop
+  ip4-arp: address overflow drops
 
 Packet 4
 
-00:04:56:039483: af-packet-input
+00:00:13:383379: af-packet-input
   af_packet: hw_if_index 2 next-index 4
     tpacket2_hdr:
       status 0x9 len 74 snaplen 74 mac 66 net 80
-      sec 0x58c421ad nsec 0xcdebab0 vlan 0 vlan_tpid 0
-00:04:56:039492: ethernet-input
+      sec 0x58c42883 nsec 0x3166962b vlan 0 vlan_tpid 0
+00:00:13:383392: ethernet-input
   IP4: 00:00:00:00:00:00 -> 00:00:00:00:00:00
-00:04:56:039496: ip4-input
+00:00:13:383398: ip4-input
   TCP: 127.0.0.1 -> 127.0.0.2
-    tos 0x00, ttl 64, length 60, checksum 0xd829
-    fragment id 0x648f, flags DONT_FRAGMENT
-00:04:56:039499: ip4-lookup
+    tos 0x00, ttl 64, length 60, checksum 0x8b31
+    fragment id 0xb187, flags DONT_FRAGMENT
+00:00:13:383403: ip4-lookup
   fib 0 dpo-idx 0 flow hash: 0x00000000
   TCP: 127.0.0.1 -> 127.0.0.2
-    tos 0x00, ttl 64, length 60, checksum 0xd829
-    fragment id 0x648f, flags DONT_FRAGMENT
-00:04:56:039502: lb4-gre4
+    tos 0x00, ttl 64, length 60, checksum 0x8b31
+    fragment id 0xb187, flags DONT_FRAGMENT
+00:00:13:383408: lb4-gre4
   lb vip[0]: ip4-gre4 127.0.0.2/32 new_size:1024 #as:1
 lb as[1]: 127.0.0.4 used
 
-00:04:56:039507: ip4-load-balance
-  fib 0 dpo-idx 9 flow hash: 0x00000000
+00:00:13:383456: ip4-load-balance
+  fib 0 dpo-idx 11 flow hash: 0x00000000
   GRE: 127.0.0.3 -> 127.0.0.4
     tos 0x00, ttl 128, length 84, checksum 0x3c74
     fragment id 0x0000
   GRE ip4
-00:04:56:039509: ip4-drop
+00:00:13:383458: ip4-arp
     GRE: 127.0.0.3 -> 127.0.0.4
       tos 0x00, ttl 128, length 84, checksum 0x3c74
       fragment id 0x0000
     GRE ip4
-00:04:56:039512: error-drop
-  ip4-input: ip4 adjacency drop
+00:00:13:383471: error-drop
+  ip4-arp: address overflow drops
 
 Packet 5
 
-00:04:56:039516: af-packet-input
+00:00:13:383489: af-packet-input
   af_packet: hw_if_index 1 next-index 4
     tpacket2_hdr:
       status 0x1 len 54 snaplen 54 mac 66 net 80
-      sec 0x58c421ad nsec 0xcdeea86 vlan 0 vlan_tpid 0
-00:04:56:039519: ethernet-input
+      sec 0x58c42883 nsec 0x3166c6ae vlan 0 vlan_tpid 0
+00:00:13:383494: ethernet-input
   IP4: 00:00:00:00:00:00 -> 00:00:00:00:00:00
-00:04:56:039520: ip4-input
+00:00:13:383505: ip4-input
   TCP: 127.0.0.2 -> 127.0.0.1
-    tos 0x00, ttl 64, length 40, checksum 0xcfc4
-    fragment id 0x6d08, flags DONT_FRAGMENT
-00:04:56:039522: ip4-lookup
-  fib 0 dpo-idx 0 flow hash: 0x00000000
+    tos 0x00, ttl 64, length 40, checksum 0x6694
+    fragment id 0xd638, flags DONT_FRAGMENT
+00:00:13:383509: ip4-lookup
+  fib 0 dpo-idx 1 flow hash: 0x00000000
   TCP: 127.0.0.2 -> 127.0.0.1
-    tos 0x00, ttl 64, length 40, checksum 0xcfc4
-    fragment id 0x6d08, flags DONT_FRAGMENT
-00:04:56:039523: ip4-drop
+    tos 0x00, ttl 64, length 40, checksum 0x6694
+    fragment id 0xd638, flags DONT_FRAGMENT
+00:00:13:383512: ip4-glean
     TCP: 127.0.0.2 -> 127.0.0.1
-      tos 0x00, ttl 64, length 40, checksum 0xcfc4
-      fragment id 0x6d08, flags DONT_FRAGMENT
-00:04:56:039525: error-drop
-  ip4-input: ip4 adjacency drop
+      tos 0x00, ttl 64, length 40, checksum 0x6694
+      fragment id 0xd638, flags DONT_FRAGMENT
+00:00:13:383516: host-lo:1-output
+  host-lo:1
+  ARP: 02:fe:c0:24:ca:52 -> ff:ff:ff:ff:ff:ff
+  request, type ethernet/IP4, address size 6/4
+  02:fe:c0:24:ca:52/127.0.0.3 -> 00:00:00:00:00:00/127.0.0.1
+00:00:13:383517: error-drop
+  ip4-glean: ARP requests sent
 
 Packet 6
 
-00:04:56:039516: af-packet-input
+00:00:13:383489: af-packet-input
   af_packet: hw_if_index 1 next-index 4
     tpacket2_hdr:
       status 0x1 len 54 snaplen 54 mac 66 net 80
-      sec 0x58c421ad nsec 0xcdef01c vlan 0 vlan_tpid 0
-00:04:56:039519: ethernet-input
+      sec 0x58c42883 nsec 0x3166cc9c vlan 0 vlan_tpid 0
+00:00:13:383494: ethernet-input
   IP4: 00:00:00:00:00:00 -> 00:00:00:00:00:00
-00:04:56:039520: ip4-input
+00:00:13:383505: ip4-input
   TCP: 127.0.0.2 -> 127.0.0.1
-    tos 0x00, ttl 64, length 40, checksum 0xcfc4
-    fragment id 0x6d08, flags DONT_FRAGMENT
-00:04:56:039522: ip4-lookup
-  fib 0 dpo-idx 0 flow hash: 0x00000000
+    tos 0x00, ttl 64, length 40, checksum 0x6694
+    fragment id 0xd638, flags DONT_FRAGMENT
+00:00:13:383509: ip4-lookup
+  fib 0 dpo-idx 1 flow hash: 0x00000000
   TCP: 127.0.0.2 -> 127.0.0.1
-    tos 0x00, ttl 64, length 40, checksum 0xcfc4
-    fragment id 0x6d08, flags DONT_FRAGMENT
-00:04:56:039523: ip4-drop
+    tos 0x00, ttl 64, length 40, checksum 0x6694
+    fragment id 0xd638, flags DONT_FRAGMENT
+00:00:13:383512: ip4-glean
     TCP: 127.0.0.2 -> 127.0.0.1
-      tos 0x00, ttl 64, length 40, checksum 0xcfc4
-      fragment id 0x6d08, flags DONT_FRAGMENT
-00:04:56:039525: error-drop
-  ip4-input: ip4 adjacency drop
+      tos 0x00, ttl 64, length 40, checksum 0x6694
+      fragment id 0xd638, flags DONT_FRAGMENT
+00:00:13:383517: error-drop
+  ip4-glean: address overflow drops
 
 Packet 7
 
-00:04:56:039516: af-packet-input
-  af_packet: hw_if_index 2 next-index 4
+00:00:13:383489: af-packet-input
+  af_packet: hw_if_index 1 next-index 4
     tpacket2_hdr:
-      status 0x1 len 54 snaplen 54 mac 66 net 80
-      sec 0x58c421ad nsec 0xcdee996 vlan 0 vlan_tpid 0
-00:04:56:039519: ethernet-input
-  IP4: 00:00:00:00:00:00 -> 00:00:00:00:00:00
-00:04:56:039520: ip4-input
-  TCP: 127.0.0.2 -> 127.0.0.1
-    tos 0x00, ttl 64, length 40, checksum 0xcfc4
-    fragment id 0x6d08, flags DONT_FRAGMENT
-00:04:56:039522: ip4-lookup
-  fib 0 dpo-idx 0 flow hash: 0x00000000
-  TCP: 127.0.0.2 -> 127.0.0.1
-    tos 0x00, ttl 64, length 40, checksum 0xcfc4
-    fragment id 0x6d08, flags DONT_FRAGMENT
-00:04:56:039523: ip4-drop
-    TCP: 127.0.0.2 -> 127.0.0.1
-      tos 0x00, ttl 64, length 40, checksum 0xcfc4
-      fragment id 0x6d08, flags DONT_FRAGMENT
-00:04:56:039525: error-drop
-  ip4-input: ip4 adjacency drop
+      status 0x1 len 42 snaplen 42 mac 66 net 80
+      sec 0x58c42883 nsec 0x31682195 vlan 0 vlan_tpid 0
+00:00:13:383494: ethernet-input
+  ARP: 02:fe:c0:24:ca:52 -> ff:ff:ff:ff:ff:ff
+00:00:13:383499: arp-input
+  request, type ethernet/IP4, address size 6/4
+  02:fe:c0:24:ca:52/127.0.0.3 -> 00:00:00:00:00:00/127.0.0.4
+00:00:13:383507: error-drop
+  arp-input: Interface is not IP enabled
 
 Packet 8
 
-00:04:56:039516: af-packet-input
+00:00:13:383489: af-packet-input
+  af_packet: hw_if_index 1 next-index 4
+    tpacket2_hdr:
+      status 0x1 len 42 snaplen 42 mac 66 net 80
+      sec 0x58c42883 nsec 0x31682ddb vlan 0 vlan_tpid 0
+00:00:13:383494: ethernet-input
+  ARP: 02:fe:c0:24:ca:52 -> ff:ff:ff:ff:ff:ff
+00:00:13:383499: arp-input
+  request, type ethernet/IP4, address size 6/4
+  02:fe:c0:24:ca:52/127.0.0.3 -> 00:00:00:00:00:00/127.0.0.4
+00:00:13:383507: error-drop
+  arp-input: Interface is not IP enabled
+
+Packet 9
+
+00:00:13:383489: af-packet-input
   af_packet: hw_if_index 2 next-index 4
     tpacket2_hdr:
       status 0x1 len 54 snaplen 54 mac 66 net 80
-      sec 0x58c421ad nsec 0xcdeef12 vlan 0 vlan_tpid 0
-00:04:56:039519: ethernet-input
+      sec 0x58c42883 nsec 0x3166c5bc vlan 0 vlan_tpid 0
+00:00:13:383494: ethernet-input
   IP4: 00:00:00:00:00:00 -> 00:00:00:00:00:00
-00:04:56:039520: ip4-input
+00:00:13:383505: ip4-input
   TCP: 127.0.0.2 -> 127.0.0.1
-    tos 0x00, ttl 64, length 40, checksum 0xcfc4
-    fragment id 0x6d08, flags DONT_FRAGMENT
-00:04:56:039522: ip4-lookup
-  fib 0 dpo-idx 0 flow hash: 0x00000000
+    tos 0x00, ttl 64, length 40, checksum 0x6694
+    fragment id 0xd638, flags DONT_FRAGMENT
+00:00:13:383509: ip4-lookup
+  fib 0 dpo-idx 1 flow hash: 0x00000000
   TCP: 127.0.0.2 -> 127.0.0.1
-    tos 0x00, ttl 64, length 40, checksum 0xcfc4
-    fragment id 0x6d08, flags DONT_FRAGMENT
-00:04:56:039523: ip4-drop
+    tos 0x00, ttl 64, length 40, checksum 0x6694
+    fragment id 0xd638, flags DONT_FRAGMENT
+00:00:13:383512: ip4-glean
     TCP: 127.0.0.2 -> 127.0.0.1
-      tos 0x00, ttl 64, length 40, checksum 0xcfc4
-      fragment id 0x6d08, flags DONT_FRAGMENT
-00:04:56:039525: error-drop
-  ip4-input: ip4 adjacency drop
+      tos 0x00, ttl 64, length 40, checksum 0x6694
+      fragment id 0xd638, flags DONT_FRAGMENT
+00:00:13:383517: error-drop
+  ip4-glean: address overflow drops
+
+Packet 10
+
+00:00:13:383489: af-packet-input
+  af_packet: hw_if_index 2 next-index 4
+    tpacket2_hdr:
+      status 0x1 len 54 snaplen 54 mac 66 net 80
+      sec 0x58c42883 nsec 0x3166cb1d vlan 0 vlan_tpid 0
+00:00:13:383494: ethernet-input
+  IP4: 00:00:00:00:00:00 -> 00:00:00:00:00:00
+00:00:13:383505: ip4-input
+  TCP: 127.0.0.2 -> 127.0.0.1
+    tos 0x00, ttl 64, length 40, checksum 0x6694
+    fragment id 0xd638, flags DONT_FRAGMENT
+00:00:13:383509: ip4-lookup
+  fib 0 dpo-idx 1 flow hash: 0x00000000
+  TCP: 127.0.0.2 -> 127.0.0.1
+    tos 0x00, ttl 64, length 40, checksum 0x6694
+    fragment id 0xd638, flags DONT_FRAGMENT
+00:00:13:383512: ip4-glean
+    TCP: 127.0.0.2 -> 127.0.0.1
+      tos 0x00, ttl 64, length 40, checksum 0x6694
+      fragment id 0xd638, flags DONT_FRAGMENT
+00:00:13:383517: error-drop
+  ip4-glean: address overflow drops
+
+Packet 11
+
+00:00:13:383489: af-packet-input
+  af_packet: hw_if_index 2 next-index 4
+    tpacket2_hdr:
+      status 0x1 len 42 snaplen 42 mac 66 net 80
+      sec 0x58c42883 nsec 0x31682aa7 vlan 0 vlan_tpid 0
+00:00:13:383494: ethernet-input
+  ARP: 02:fe:c0:24:ca:52 -> ff:ff:ff:ff:ff:ff
+00:00:13:383499: arp-input
+  request, type ethernet/IP4, address size 6/4
+  02:fe:c0:24:ca:52/127.0.0.3 -> 00:00:00:00:00:00/127.0.0.4
+00:00:13:383507: error-drop
+  arp-input: IP4 source address matches local interface
+
+Packet 12
+
+00:00:13:383526: af-packet-input
+  af_packet: hw_if_index 1 next-index 4
+    tpacket2_hdr:
+      status 0x1 len 42 snaplen 42 mac 66 net 80
+      sec 0x58c42883 nsec 0x3168bed8 vlan 0 vlan_tpid 0
+00:00:13:383529: ethernet-input
+  ARP: 02:fe:c0:24:ca:52 -> ff:ff:ff:ff:ff:ff
+00:00:13:383531: arp-input
+  request, type ethernet/IP4, address size 6/4
+  02:fe:c0:24:ca:52/127.0.0.3 -> 00:00:00:00:00:00/127.0.0.1
+00:00:13:383534: error-drop
+  arp-input: Interface is not IP enabled
+
+Packet 13
+
+00:00:13:383526: af-packet-input
+  af_packet: hw_if_index 1 next-index 4
+    tpacket2_hdr:
+      status 0x1 len 42 snaplen 42 mac 66 net 80
+      sec 0x58c42883 nsec 0x3168c5ee vlan 0 vlan_tpid 0
+00:00:13:383529: ethernet-input
+  ARP: 02:fe:c0:24:ca:52 -> ff:ff:ff:ff:ff:ff
+00:00:13:383531: arp-input
+  request, type ethernet/IP4, address size 6/4
+  02:fe:c0:24:ca:52/127.0.0.3 -> 00:00:00:00:00:00/127.0.0.1
+00:00:13:383534: error-drop
+  arp-input: Interface is not IP enabled
+
+Packet 14
+
+00:00:13:383526: af-packet-input
+  af_packet: hw_if_index 2 next-index 4
+    tpacket2_hdr:
+      status 0x1 len 42 snaplen 42 mac 66 net 80
+      sec 0x58c42883 nsec 0x3168c44f vlan 0 vlan_tpid 0
+00:00:13:383529: ethernet-input
+  ARP: 02:fe:c0:24:ca:52 -> ff:ff:ff:ff:ff:ff
+00:00:13:383531: arp-input
+  request, type ethernet/IP4, address size 6/4
+  02:fe:c0:24:ca:52/127.0.0.3 -> 00:00:00:00:00:00/127.0.0.1
+00:00:13:383534: error-drop
+  arp-input: IP4 source address matches local interface
 
 

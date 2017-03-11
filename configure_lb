@@ -21,6 +21,9 @@ sudo service vpp restart
 vppctl create host-interface name lo:0
 vppctl create host-interface name lo:1
 
+# Set up the LB source IP on host-lo:1
+vppctl set int ip address host-lo:1 127.0.0.3/8
+
 # Bring these up
 vppctl set interface state host-lo:0 up
 vppctl set interface state host-lo:1 up
@@ -41,11 +44,15 @@ vppctl lb as 127.0.0.2/32 127.0.0.4
 
 
 ###
-### GRE on receiving end - with route to 127.0.0.2?
+### GRE
 ###
+
+# Create GRE tunnel in VPP (seems to make no difference at present)
+vppctl create gre tunnel src 127.0.0.3 dst 127.0.0.4
 
 sudo ip tunnel add gre1 mode gre remote 127.0.0.3 local 127.0.0.4 ttl 255
 sudo ip link set gre1 up
+# Do we need to have a route to 127.0.0.2 through the GRE tunnel?
 # sudo ip addr add 127.0.0.2/32 dev gre1
 
 ###
