@@ -21,7 +21,9 @@ sudo service vpp restart
 vppctl create host-interface name lo:0
 vppctl create host-interface name lo:1
 
-# Set up the LB source IP on host-lo:1
+# Set up the LB source IP on host-lo:0 and host-lo:1
+# @@@ This line causes bad tcp checksum errors (without going through LB)
+# vppctl set int ip address host-lo:0 127.0.0.2/8
 vppctl set int ip address host-lo:1 127.0.0.3/8
 
 # Bring these up
@@ -50,10 +52,26 @@ vppctl lb as 127.0.0.2/32 127.0.0.4
 # Create GRE tunnel in VPP (seems to make no difference at present)
 vppctl create gre tunnel src 127.0.0.3 dst 127.0.0.4
 
-sudo ip tunnel add gre1 mode gre remote 127.0.0.3 local 127.0.0.4 ttl 255
-sudo ip link set gre1 up
-# Do we need to have a route to 127.0.0.2 through the GRE tunnel?
-# sudo ip addr add 127.0.0.2/32 dev gre1
+# Two options here it seems - neither work...
+USE_GRETAP=1
+if [[ $USE_GRETAP -ne 0 ]]
+then
+    # Use gretap
+    sudo ip link add gre2 type gretap remote 127.0.0.3 local 127.0.0.4 ttl 255
+    sudo ip link set gre2 up
+
+    # Do we need to have a route to 127.0.0.2 through the GRE tunnel?
+    sudo ip addr add 127.0.0.2/32 dev gre2
+    sudo ip addr add 127.0.0.4/32 dev gre2
+else
+    sudo ip tunnel add gre1 mode gre remote 127.0.0.3 local 127.0.0.4 ttl 255
+    sudo ip link set gre1 up
+
+    # Do we need to have a route to 127.0.0.2 through the GRE tunnel?
+    sudo ip addr add 127.0.0.2/32 dev gre1
+    sudo ip addr add 127.0.0.4/32 dev gre1
+fi
+
 
 ###
 ### Output the config
