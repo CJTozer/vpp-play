@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# Set up trace, try to connect a TCP socket, then output the trace to file
+vppctl clear trace
+vppctl trace add af-packet-input 20
+# Need this running to listen:
+# nc -uvlk4 127.0.0.4 3000
+nc -uv4 127.0.0.2 3000
+vppctl show trace > "$(dirname $0)/latest_output"
