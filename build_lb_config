@@ -20,7 +20,7 @@ AS1_DST_IF_PREFIX_LEN=24
 ###
 VPP_CONFIG_FILE="$(dirname $0)/test_lb.conf"
 VPP_TMP_CLI_CONFIG_FILE="/tmp/vpp_cli_config"
-VPP_CONFIGURE_SCRIPT="$(dirname $0)/vpp_configure"
+VPP_CONFIGURE_SCRIPT="$(dirname $0)/run_vpp"
 
 
 ###
