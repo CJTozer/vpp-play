@@ -2,20 +2,20 @@
 
 
 ###
-### OS
+### Loopback Interfaces
 ###
 # 4 Loopback interfaces
 sudo ifconfig lo:0 127.0.0.2 netmask 255.0.0.0 up
 sudo ifconfig lo:1 127.0.0.3 netmask 255.0.0.0 up
 sudo ifconfig lo:2 127.0.0.4 netmask 255.0.0.0 up
 
-# Restart VPP
-sudo service vpp restart
-
 
 ###
 ### VPP
 ###
+
+# Restart VPP
+sudo service vpp restart
 
 # Add loopback interfaces to VPP (using .2 and .3)
 vppctl create host-interface name lo:0
@@ -39,14 +39,14 @@ vppctl lb vip 127.0.0.2/32 encap gre4
 # Add an AS - at .4
 vppctl lb as 127.0.0.2/32 127.0.0.4
 
+
 ###
-### GRE on receiving end
+### GRE on receiving end - with route to 127.0.0.2?
 ###
 
-# TODO - maybe this needs to live in another namespace so we can have the (unencapsulated) target as 127.0.0.2?
-# sudo ip tunnel add gre1 mode gre remote 127.0.0.3 local 127.0.0.4 ttl 255
-# sudo ip link set gre0 up
-# sudo ip addr add 10.10.10.2/24 dev gre0
+sudo ip tunnel add gre1 mode gre remote 127.0.0.3 local 127.0.0.4 ttl 255
+sudo ip link set gre1 up
+# sudo ip addr add 127.0.0.2/32 dev gre1
 
 ###
 ### Output the config
@@ -60,3 +60,6 @@ echo "VPP LB Config:"
 vppctl show lb
 echo "...LB VIP Config:"
 vppctl show lb vip verbose
+echo "================================================================"
+echo "FIB Table:"
+vppctl show ip fib
